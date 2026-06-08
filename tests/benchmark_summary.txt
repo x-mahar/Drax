@@ -1,0 +1,85 @@
+Benchmark Run: 2026-06-04 19:01:31
+DB: POSTGRES
+
+Total : 25
+Passed: 24 (96%)
+Failed: 1
+Healed: 2
+Avg   : 3078ms
+
+[PASS] T1 | show all products in Electronics category
+  rows=5 time=733ms
+
+[PASS] T1 | list all stores in North region
+  rows=4 time=451ms
+
+[PASS] T1 | show all employees in Sales department
+  rows=9 time=345ms
+
+[PASS] T1 | which warehouses are running low on stock
+  rows=3 time=646ms
+
+[PASS] T2 | which customers placed the most orders
+  rows=10 time=341ms
+
+[PASS] T2 | show total revenue by product category
+  rows=8 time=359ms
+
+[PASS] T2 | top 10 customers by total amount spent
+  rows=10 time=480ms
+
+[PASS] T2 | which brand has the highest selling products
+  rows=10 time=722ms
+
+[PASS] T2 | show all orders with payment status Failed
+  rows=230 time=597ms
+
+[PASS] [healed] T2 | which region has the highest number of orders
+  rows=5 time=834ms
+
+[PASS] T3 | show revenue by customer segment and region
+  rows=6 time=424ms
+
+[PASS] T3 | which store sold the most Electronics products
+  rows=10 time=3485ms
+
+[PASS] T3 | top 5 products by revenue across all order items
+  rows=5 time=4772ms
+
+[PASS] T3 | show monthly revenue trend for year 2024
+  rows=12 time=4393ms
+
+[PASS] T3 | which customers returned the most items
+  rows=10 time=5036ms
+
+[FAIL] T4 | show total revenue by brand for completed orders only
+  rows=0 time=3972ms
+  reason: Too few rows: got 0, expected >= 3
+
+[PASS] T4 | which department employees work in the highest revenue stores
+  rows=5 time=4558ms
+
+[PASS] [healed] T4 | compare online vs in-store revenue by product category
+  rows=8 time=10828ms
+
+[PASS] T4 | show top 10 customers by revenue who never returned any item
+  rows=10 time=4860ms
+
+[PASS] T4 | which warehouse region has the lowest stock for top selling products
+  rows=5 time=3654ms
+
+[PASS] T5 | what is the average order value by channel
+  rows=4 time=5741ms
+
+[PASS] T5 | show revenue growth month over month for 2023 vs 2024
+  rows=24 time=5547ms
+
+[PASS] T5 | which payment method is most popular among premium segment customers
+  rows=6 time=3687ms
+
+[PASS] T5 | show products with high return rate
+  rows=10 time=5729ms
+
+[PASS] T5 | what percentage of orders were cancelled by region
+  rows=4 time=4747ms
+

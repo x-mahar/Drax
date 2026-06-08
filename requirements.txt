@@ -1,0 +1,34 @@
+# NL to Any DB POC — Requirements
+# Install with: pip install -r requirements.txt
+
+# Core
+groq
+python-dotenv
+
+# FastAPI
+fastapi
+uvicorn[standard]
+
+# Schema Pruning
+sentence-transformers
+
+# SQL DBs
+psycopg2-binary
+mysql-connector-python
+
+# NoSQL DBs
+pymongo
+redis
+
+# Vector DB
+chromadb
+
+# Charts (CLI)
+matplotlib
+seaborn
+
+# Data Generation
+Faker
+
+# Testing
+pytest

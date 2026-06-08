@@ -1,0 +1,55 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+virtualenv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database files (except seed scripts)
+*.db
+*.sqlite
+*.sqlite3
+chroma_db/
+
+# Environment & secrets
+.env
+*.env
+.env.local
+
+# Generated charts
+charts/
+*.png
+*.jpg
+*.jpeg
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test outputs
+test_results/
+.pytest_cache/
+
+# Backup files
+*.bak
+*.backup
+
+# Project specific
+sales.db
+chroma_db/
+
+POC.pdf
