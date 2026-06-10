@@ -8,7 +8,7 @@
 
 A completed Proof of Concept (POC) that validates whether an LLM can reliably convert natural language queries into the correct query language (SQL, MongoDB, Redis, ChromaDB), execute them on real databases, and return structured business insights with chart configurations — all via a FastAPI REST endpoint ready for any frontend.
 
-**Powered by:** Groq (LLaMA 3.3 70B) + Python + 6 databases + Schema Pruning + FastAPI
+**Powered by:** Groq (LLaMA-3.1-8b-instant) + Python + 6 databases + Schema Pruning + FastAPI
 
 ---
 
@@ -206,20 +206,22 @@ Terminal output:
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/query` | Main endpoint — takes question, returns full BI response |
-| GET | `/history` | Returns this session's query history |
-| DELETE | `/history` | Clears session history |
-| GET | `/health` | Server + DB status check |
-| GET | `/docs` | Swagger UI — test all endpoints in browser |
+| Method | Endpoint     | Description                                               |
+| ------ | ------------ | --------------------------------------------------------- |
+| POST   | `/query`   | Main endpoint — takes question, returns full BI response |
+| GET    | `/history` | Returns this session's query history                      |
+| DELETE | `/history` | Clears session history                                    |
+| GET    | `/health`  | Server + DB status check                                  |
+| GET    | `/docs`    | Swagger UI — test all endpoints in browser               |
 
 ### POST /query — Request
+
 ```json
 { "question": "which brand has the highest selling products" }
 ```
 
 ### POST /query — Response shape
+
 ```json
 {
   "status": "success",
@@ -249,14 +251,14 @@ Terminal output:
 
 ## Supported Databases
 
-| # | DB | Type | Query Language | Status |
-|---|-----|------|---------------|--------|
-| 1 | SQLite | SQL | SQL | Done |
-| 2 | PostgreSQL | SQL | SQL | Done |
-| 3 | MySQL | SQL | SQL | Done |
-| 4 | MongoDB | NoSQL | JSON query | Done |
-| 5 | Redis | NoSQL | Key-Value ops | Done |
-| 6 | ChromaDB | VectorDB | Semantic search | Done |
+| # | DB         | Type     | Query Language  | Status |
+| - | ---------- | -------- | --------------- | ------ |
+| 1 | SQLite     | SQL      | SQL             | Done   |
+| 2 | PostgreSQL | SQL      | SQL             | Done   |
+| 3 | MySQL      | SQL      | SQL             | Done   |
+| 4 | MongoDB    | NoSQL    | JSON query      | Done   |
+| 5 | Redis      | NoSQL    | Key-Value ops   | Done   |
+| 6 | ChromaDB   | VectorDB | Semantic search | Done   |
 
 ---
 
@@ -264,15 +266,15 @@ Terminal output:
 
 Full FK-connected retail schema seeded across all 6 DBs using Faker (Indian locale).
 
-| Domain | Tables |
-|--------|--------|
-| Customer | customers, customer_segments |
-| Product | products, categories, brands |
-| Sales | orders, order_items, returns |
-| Inventory | warehouses, inventory |
-| Store | stores, store_sales |
-| HR | employees, departments |
-| Finance | payments |
+| Domain    | Tables                       |
+| --------- | ---------------------------- |
+| Customer  | customers, customer_segments |
+| Product   | products, categories, brands |
+| Sales     | orders, order_items, returns |
+| Inventory | warehouses, inventory        |
+| Store     | stores, store_sales          |
+| HR        | employees, departments       |
+| Finance   | payments                     |
 
 ---
 
@@ -293,12 +295,14 @@ DB_TYPE = "chroma"      # ChromaDB
 ## Setup & Installation
 
 ### 1. Clone the repo
+
 ```bash
 git clone <your-repo-url>
 cd nl-to-sql-poc
 ```
 
 ### 2. Create virtual environment
+
 ```bash
 python -m venv venv
 venv\Scripts\activate        # Windows
@@ -306,11 +310,13 @@ source venv/bin/activate     # Mac/Linux
 ```
 
 ### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Configure `.env`
+
 ```bash
 GROQ_API_KEY=your_groq_api_key_here
 
@@ -342,6 +348,7 @@ CHROMA_PATH=./chroma_db
 ```
 
 ### 5. Seed the database
+
 ```bash
 # PostgreSQL — recommended
 python -m data.seed_postgres_retail
@@ -363,21 +370,25 @@ python -m data.seed_chroma_retail
 ```
 
 ### 6. Set DB type in `config.py`
+
 ```python
 DB_TYPE = "postgres"
 ```
 
 ### 7. Run CLI
+
 ```bash
 python main.py
 ```
 
 ### 8. Run API server
+
 ```bash
 python -m uvicorn api.main:app --reload --port 8000
 ```
 
 ### 9. Open Swagger UI
+
 ```
 http://localhost:8000/docs
 ```
@@ -387,6 +398,7 @@ http://localhost:8000/docs
 ## Sample Queries
 
 ### Single Table
+
 ```
 show all products in Electronics category
 list all stores in North region
@@ -395,6 +407,7 @@ show all employees in Sales department
 ```
 
 ### Multi-Table Joins
+
 ```
 which customers placed the most orders
 show total revenue by product category
@@ -404,6 +417,7 @@ show all orders with payment status Failed
 ```
 
 ### Deep Joins (6+ Tables)
+
 ```
 show total revenue by brand for completed orders only
 compare online vs in-store revenue by product category
@@ -427,66 +441,68 @@ Saves results to `tests/benchmark_results.json` and `tests/benchmark_summary.txt
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| LLM | Groq API — LLaMA 3.3 70B |
-| API | FastAPI + Uvicorn |
-| Schema Pruning | sentence-transformers (all-MiniLM-L6-v2) + cosine similarity |
-| SQL DBs | SQLite, PostgreSQL, MySQL |
-| NoSQL DBs | MongoDB, Redis |
-| VectorDB | ChromaDB |
-| Charts (CLI) | Matplotlib + Seaborn (2x2 dashboard) |
-| Charts (API) | Structured JSON — Recharts ready |
-| Data Generation | Faker (Indian locale) |
-| Language | Python 3.11 |
-| Config | python-dotenv |
+| Layer           | Technology                                                   |
+| --------------- | ------------------------------------------------------------ |
+| LLM             | Groq API — LLaMA-3.1-8b-instant                             |
+| API             | FastAPI + Uvicorn                                            |
+| Schema Pruning  | sentence-transformers (all-MiniLM-L6-v2) + cosine similarity |
+| SQL DBs         | SQLite, PostgreSQL, MySQL                                    |
+| NoSQL DBs       | MongoDB, Redis                                               |
+| VectorDB        | ChromaDB                                                     |
+| Charts (CLI)    | Matplotlib + Seaborn (2x2 dashboard)                         |
+| Charts (API)    | Structured JSON — Recharts ready                            |
+| Data Generation | Faker (Indian locale)                                        |
+| Language        | Python 3.11                                                  |
+| Config          | python-dotenv                                                |
 
 ---
 
 ## Current Status
 
-| Feature | Status |
-|---|---|
-| NL to SQL generation | Done |
-| NL to MongoDB query | Done |
-| NL to Redis query | Done |
-| NL to ChromaDB semantic search | Done |
-| SQL Validator | Done |
-| SQLite support | Done |
-| PostgreSQL support | Done |
-| MySQL support | Done |
-| MongoDB support | Done |
-| Redis support | Done |
-| ChromaDB support | Done |
-| Business insights (INR) | Done |
-| Auto 2x2 chart dashboard (CLI) | Done |
-| Structured chart data (API) | Done |
-| LLM picks chart type automatically | Done |
-| Chart history per session | Done |
-| Intent classification (typo-safe) | Done |
-| DB swap (one line) | Done |
-| Auto schema detection (all 6 DBs) | Done |
-| Schema pruning (cosine similarity) | Done |
-| Self-healing layer | Done |
-| Enterprise retail schema (15 tables) | Done |
-| Faker-based data generator | Done |
-| Seeded all 6 DBs | Done |
-| FastAPI REST endpoint | Done |
-| Session history API | Done |
-| Benchmark / stress test | Done |
-| Virtual environment setup | Done |
+| Feature                              | Status |
+| ------------------------------------ | ------ |
+| NL to SQL generation                 | Done   |
+| NL to MongoDB query                  | Done   |
+| NL to Redis query                    | Done   |
+| NL to ChromaDB semantic search       | Done   |
+| SQL Validator                        | Done   |
+| SQLite support                       | Done   |
+| PostgreSQL support                   | Done   |
+| MySQL support                        | Done   |
+| MongoDB support                      | Done   |
+| Redis support                        | Done   |
+| ChromaDB support                     | Done   |
+| Business insights (INR)              | Done   |
+| Auto 2x2 chart dashboard (CLI)       | Done   |
+| Structured chart data (API)          | Done   |
+| LLM picks chart type automatically   | Done   |
+| Chart history per session            | Done   |
+| Intent classification (typo-safe)    | Done   |
+| DB swap (one line)                   | Done   |
+| Auto schema detection (all 6 DBs)    | Done   |
+| Schema pruning (cosine similarity)   | Done   |
+| Self-healing layer                   | Done   |
+| Enterprise retail schema (15 tables) | Done   |
+| Faker-based data generator           | Done   |
+| Seeded all 6 DBs                     | Done   |
+| FastAPI REST endpoint                | Done   |
+| Session history API                  | Done   |
+| Benchmark / stress test              | Done   |
+| Virtual environment setup            | Done   |
 
 ---
 
 ## Roadmap
 
 ### Next — Backend Optimizations
+
 - [ ] Parallel LLM calls (answer + chart in parallel — saves 1-2s per query)
 - [ ] Schema cache persistence (survive server restarts)
 - [ ] Response caching (same question = instant response)
 - [ ] DB connection pooling (PostgreSQL at scale)
 
 ### Phase 5 — Product Features
+
 - [ ] Web UI (React + Recharts — API already ready)
 - [ ] Query history persistence (database-backed)
 - [ ] Multi-schema support
@@ -494,6 +510,7 @@ Saves results to `tests/benchmark_results.json` and `tests/benchmark_summary.txt
 - [ ] Authentication & API key management
 
 ### Phase 6 — Enterprise DBs
+
 - [ ] Snowflake (cloud data warehouse)
 - [ ] Delta Lake (big data + Spark)
 - [ ] Elasticsearch (search & analytics)
